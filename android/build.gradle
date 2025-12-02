@@ -1,7 +1,7 @@
 android {
     namespace "com.mygdx.game"
     buildToolsVersion "36.1.0"
-    compileSdkVersion 35
+    compileSdkVersion 33
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "com.mygdx.game"
         minSdkVersion 14
-        targetSdkVersion 35
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }

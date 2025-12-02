@@ -1,14 +1,17 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.GameSetting.SHOOTING_COOL_DOWN;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameSetting;
 
 import java.awt.Point;
 
 public class ShipObject extends GameObject {
-
+int lastShotTime;
     public ShipObject(int x, int y, int wight, int height, String textyrePath, World world) {
         super(textyrePath, x, y, height, wight, world);
 
@@ -25,24 +28,33 @@ public class ShipObject extends GameObject {
         }
 
 
-        if(getX()> GameSetting.SCR_WIDTH+ width/2f){
+        if (getX() > GameSetting.SCR_WIDTH + width / 2f) {
             setX(0);
         }
-        if (getX() < (-width/2f)){
-           setX(GameSetting.SCR_WIDTH);
+        if (getX() < (-width / 2f)) {
+            setX(GameSetting.SCR_WIDTH);
         }
 
     }
 
-    public void move(Vector3 vector3){
+    public boolean needToShoot() {
+        if (  TimeUtils.millis()  - lastShotTime >= GameSetting.SHOOTING_COOL_DOWN) {
+            lastShotTime = (int) TimeUtils.millis();
+            return true;
+        }
+return false;
+        }
+
+
+    public void move(Vector3 vector3) {
 
         body.applyForceToCenter(
 
-                        new Vector2(
-                                (vector3.x - getX()) * GameSetting.SHIP_FORSE_RATIO,
-                                (vector3.y - getY()) * GameSetting.SHIP_FORSE_RATIO
-                        ),
-                        true
+                new Vector2(
+                        (vector3.x - getX()) * GameSetting.SHIP_FORSE_RATIO,
+                        (vector3.y - getY()) * GameSetting.SHIP_FORSE_RATIO
+                ),
+                true
         );
 
     }

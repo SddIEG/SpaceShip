@@ -44,7 +44,7 @@ public class MyGdxGame extends Game {
             world.step(STEP_TIME,VELOCITY_ITERATIONS,POSITION_ITERATIONS);
         }
     }
-    
+
 
     @Override
     public void dispose() {
