@@ -1,4 +1,4 @@
-package com.mygdx.game.screens;
+package ru.samsung.gamestudio.screens;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;

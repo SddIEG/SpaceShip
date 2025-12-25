@@ -1,25 +1,28 @@
-package com.mygdx.game.objects;
+package ru.samsung.gamestudio.objects;
 
-import static com.mygdx.game.GameSetting.SCALE;
+
+import static ru.samsung.gamestudio.GameSetting.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class GameObject {
     int width;
+    public short cBits;
     public int height;
     public Body body;
     Texture texture;
 
-    GameObject(String texturePath, int x, int y, int width, int height, World world) {
+    GameObject(String texturePath, int x, int y, int width, int height,short cBit, World world) {
         this.height = height;
         this.width = width;
+        this.cBits = cBit;
 
          texture = new Texture(texturePath);
         body = createBode(x, y, world);
@@ -37,8 +40,10 @@ public class GameObject {
         fixtureDef.shape = circleShape;
         fixtureDef.density = 0.1f;
         fixtureDef.friction = 1f;
+        fixtureDef.filter.categoryBits = cBits;
 
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
         circleShape.dispose();
 
         body.setTransform(x * SCALE, y * SCALE, 0);
@@ -48,11 +53,12 @@ public class GameObject {
     public void dispose() {
 
 
+
     }
 
 
     public void draw(SpriteBatch batch) {
-        batch.draw(texture ,getX()-(width/2f),getY()-(height/2f));
+        batch.draw(texture ,getX()-(width/2f),getY()-(height/2f),width,height);
 
     }
 
@@ -70,5 +76,10 @@ public class GameObject {
 
     public void setY(int y) {
         body.setTransform(body.getPosition().x, y * SCALE, 0);
+    }
+
+
+    public void hit(){
+
     }
 }

@@ -1,19 +1,21 @@
-package com.mygdx.game.objects;
+package ru.samsung.gamestudio.objects;
 
-import static com.mygdx.game.GameSetting.SHOOTING_COOL_DOWN;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.GameSetting;
 
-import java.awt.Point;
+import ru.samsung.gamestudio.GameSetting;
 
 public class ShipObject extends GameObject {
-int lastShotTime;
+long lastShotTime;
+public int kolvoLives;
+public boolean doubleShoot = false;
     public ShipObject(int x, int y, int wight, int height, String textyrePath, World world) {
-        super(textyrePath, x, y, height, wight, world);
+        super(textyrePath, x, y, height, wight,GameSetting.SHIP_BIT, world);
+        body.setLinearDamping(10);
+        kolvoLives = 3;
 
     }
 
@@ -39,7 +41,7 @@ int lastShotTime;
 
     public boolean needToShoot() {
         if (  TimeUtils.millis()  - lastShotTime >= GameSetting.SHOOTING_COOL_DOWN) {
-            lastShotTime = (int) TimeUtils.millis();
+            lastShotTime = TimeUtils.millis();
             return true;
         }
 return false;
@@ -58,6 +60,19 @@ return false;
         );
 
     }
+  @Override
+    public void hit() {
+        kolvoLives -= 1;
+    }
 
+    public boolean isAlive() {
+        return kolvoLives > 0;
+    }
+    public int getLivesLeft(){
+        return kolvoLives;
+    }
 
 }
+
+
+
