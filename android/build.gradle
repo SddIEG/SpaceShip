@@ -1,6 +1,6 @@
 android {
-    namespace "com.mygdx.game"
-    buildToolsVersion "36.1.0"
+    namespace "ru.samsung.gamestudio"
+    buildToolsVersion "34.0.0"
     compileSdkVersion 33
     sourceSets {
         main {
@@ -18,8 +18,8 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.mygdx.game"
-        minSdkVersion 14
+        applicationId "ru.samsung.gamestudio"
+        minSdkVersion 19
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -83,7 +83,7 @@ tasks.register('run', Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.mygdx.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'ru.samsung.gamestudio/ru.samsung.gamestudio.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
